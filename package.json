@@ -2,7 +2,7 @@
 	"name": "root",
 	"private": true,
 	"scripts": {
-		"dev": "lerna run dev --scope=web --scope=api-gateway"
+		"dev": "lerna run dev --parallel"
 	},
 	"devDependencies": {
 		"lerna": "^4.0.0"
