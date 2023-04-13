@@ -1,7 +1,8 @@
 import { FC } from 'react';
+import PageWrapper from '../components/PageWrapper';
 
 const Home: FC = () => {
-  return <>{'HOME'}</>;
+  return <PageWrapper>{'HOME'}</PageWrapper>;
 };
 
 export default Home;

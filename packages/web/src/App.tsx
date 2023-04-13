@@ -12,6 +12,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/store/*" element={<StoreDetail />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Suspense>
     </Provider>
