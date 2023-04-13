@@ -16,7 +16,7 @@ const useStoreDetail = (storeId?: number | string) => {
       // Todo: get data from api gateway
       // Todo: add data type
       const data = await axios
-        .get(`http://localhost:8081/store/${id}`)
+        .get(`http://localhost:8081/api/store/${id}`)
         .then(response => {
           return response.data;
         })
