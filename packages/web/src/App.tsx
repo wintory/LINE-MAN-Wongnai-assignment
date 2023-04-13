@@ -1,10 +1,21 @@
+import { Suspense } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import PageNotFound from './pages/PageNotFound';
+import StoreDetail from './pages/StoreDetail';
+import Provider from './Provider';
 
 const App = () => {
   return (
-    <div>
-      <h1>Edit this app to complete LINE MAN Wongnai Frontend Assignment!</h1>
-    </div>
-  )
-}
+    <Provider>
+      <Suspense fallback={<>loading...</>}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/store/*" element={<StoreDetail />} />
+        </Routes>
+      </Suspense>
+    </Provider>
+  );
+};
 
-export default App
+export default App;
