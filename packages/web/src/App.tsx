@@ -12,7 +12,7 @@ const App = () => {
       <Suspense fallback={<>loading...</>}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/store/*" element={<StoreDetail />} />
+          <Route path="/store/:storeId" element={<StoreDetail />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Suspense>
