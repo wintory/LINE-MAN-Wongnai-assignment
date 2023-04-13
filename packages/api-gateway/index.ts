@@ -1,12 +1,11 @@
 import express, { Application } from 'express';
+import AppConfig from './config/app';
+import Routes from './routes';
 
 const app: Application = express();
-const port = process.env.PORT || 8080;
+const port = AppConfig.port;
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-app.get('/', (req, res) => res.send('LINE MAN Wongnai Frontend Assignment'));
+app.use(Routes);
 
 try {
   app.listen(port, (): void => {
