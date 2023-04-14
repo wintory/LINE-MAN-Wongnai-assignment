@@ -1,6 +1,7 @@
 import { Chip, Grid, Skeleton, styled, Typography } from '@mui/material';
 import { FC } from 'react';
 import { useParams } from 'react-router-dom';
+import FullScreenLoading from '../components/FullScreenLoading';
 import PageWrapper from '../components/PageWrapper';
 import useStoreDetail from '../hooks/useStoreDetail';
 
@@ -21,7 +22,7 @@ const StoreDetail: FC = () => {
   const { storeId } = params;
   const { storeDetail } = useStoreDetail(storeId);
 
-  if (!storeDetail) return <PageWrapper>loading</PageWrapper>;
+  if (!storeDetail) return <FullScreenLoading />;
 
   return (
     <PageWrapper>
@@ -31,7 +32,6 @@ const StoreDetail: FC = () => {
           {storeDetail.name}
           <StatusChip isActive={false} label="" />
         </Typography>
-        {}
       </Grid>
     </PageWrapper>
   );

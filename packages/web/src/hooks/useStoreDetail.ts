@@ -13,7 +13,6 @@ const useStoreDetail = (storeId?: number | string) => {
 
   const getStoreDetail = useCallback(
     async (id: number | string) => {
-      // Todo: get data from api gateway
       // Todo: add data type
       const data = await axios
         .get(`http://localhost:8081/api/store/${id}`)
@@ -24,7 +23,6 @@ const useStoreDetail = (storeId?: number | string) => {
           console.error(error);
           return undefined;
         });
-      console.log({ data });
       setStoreDetail(data);
     },
     [storeId]
