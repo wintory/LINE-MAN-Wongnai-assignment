@@ -1,17 +1,10 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import StoreController from '../../controllers/store.controller';
 
 const router = express.Router();
 
-router.get('/', async (req: Request, res: Response) => {
-  try {
-    res.json({});
-  } catch (error) {
-    console.error(error);
-    res.sendStatus(500);
-  }
-});
-
+router.get('/', StoreController.getAllStore);
 router.get('/:storeId', StoreController.getStoreDetail);
+router.get('/:storeId/:menuNames', StoreController.getMenuDetail);
 
 export default router;
