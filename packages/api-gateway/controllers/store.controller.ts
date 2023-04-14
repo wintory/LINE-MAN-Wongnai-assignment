@@ -36,6 +36,8 @@ const StoreController = {
   getStoreDetail: async (req: Request, res: Response) => {
     try {
       const storeId = req.params.storeId || '';
+      let page = req?.query?.page || DEFAULT_STORE_PAGE;
+      let limit = req?.query?.limit || DEFAULT_STORE_PAGE_LIMIT;
 
       if (!storeId) {
         res.status(404).json({
@@ -54,8 +56,6 @@ const StoreController = {
       const menuValues: string[] = [];
 
       if (storeDetail && menus) {
-        let page = req?.query?.page || DEFAULT_STORE_PAGE;
-        let limit = req?.query?.limit || DEFAULT_STORE_PAGE_LIMIT;
         const menuNames = getPaginationData(menus, +limit, +page);
 
         if (menuNames.length > 0) {
@@ -75,6 +75,8 @@ const StoreController = {
       const result = {
         ...storeDetail,
         menus: menuValues.length > 0 ? menuValues : storeDetail?.menus,
+        page,
+        limit,
       };
 
       res.json(result);
