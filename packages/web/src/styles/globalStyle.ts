@@ -18,6 +18,7 @@ export const getGlobalStyle = (theme: Theme) => css`
     overflow: auto;
     text-align: left;
     font-weight: normal;
+    color: ${theme.palette.common.black};
   }
 
   ::-webkit-scrollbar {

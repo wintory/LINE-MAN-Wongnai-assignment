@@ -1,5 +1,12 @@
-import { Chip, Box, styled, Typography, Divider } from '@mui/material';
-import { FC } from 'react';
+import {
+  Chip,
+  Box,
+  styled,
+  Typography,
+  Divider,
+  CircularProgress,
+} from '@mui/material';
+import { FC, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import FullScreenLoading from '../components/FullScreenLoading';
 import PageWrapper from '../components/PageWrapper';
@@ -40,15 +47,18 @@ const StatusChip = styled(Chip)<{ isActive: boolean }>(
 const StoreDetail: FC = () => {
   const params = useParams();
   const { storeId } = params;
-  const { storeDetail, isActiveStore, handleGetFullMenu } =
+  const { storeDetail, isActiveStore, handleGetFullMenu, isFetching } =
     useStoreDetail(storeId);
+  const storeMenu = useMemo(() => {
+    return storeDetail?.menus || [];
+  }, [storeDetail?.menus]);
 
   if (!storeDetail) return <FullScreenLoading />;
 
   return (
     <PageWrapper>
       <Box display="block">
-        <Image alt="store-cover-image" src={storeDetail.coverImage} />
+        <Image alt="store-cover-image" src={storeDetail?.coverImage} />
         <ContentWrapper>
           <Typography
             variant="h2"
@@ -56,7 +66,7 @@ const StoreDetail: FC = () => {
             position="relative"
             width="fit-content"
           >
-            {storeDetail.name}
+            {storeDetail?.name}
           </Typography>
           <StatusChip
             size="medium"
@@ -74,16 +84,32 @@ const StoreDetail: FC = () => {
           </Box>
         </ContentWrapper>
       </Box>
+      <Typography
+        variant="h4"
+        pt={2}
+        pl={2}
+        position="relative"
+        width="fit-content"
+      >
+        All menu
+      </Typography>
+      <Divider />
       <Box display="block">
-        {storeDetail.menus.map((data: MenuDetail, index: number) => (
-          <Box key={data.id}>
-            <ProductCard
-              data={data}
-              handleClick={() => handleGetFullMenu(storeDetail?.id, data?.id)}
-            />
-            {index !== storeDetail.menus.length - 1 && <Divider />}
+        {storeMenu.length > 0 &&
+          storeMenu.map((data: MenuDetail, index: number) => (
+            <Box key={data.id}>
+              <ProductCard
+                data={data}
+                handleClick={() => handleGetFullMenu(storeDetail?.id, data?.id)}
+              />
+              {index !== (storeDetail.menus || []).length - 1 && <Divider />}
+            </Box>
+          ))}
+        {isFetching && (
+          <Box justifyContent="center" width="100%">
+            <CircularProgress color="success" />
           </Box>
-        ))}
+        )}
       </Box>
     </PageWrapper>
   );

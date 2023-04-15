@@ -9,6 +9,7 @@ const LoadingWrapper = styled('div')(() => ({
   alignItems: 'center',
   justifyContent: 'center',
   backgroundColor: 'rgb(0,0,0,0.1)',
+  pointerEvents: 'none',
 }));
 
 const FullScreenLoading: FC = () => {

@@ -1,4 +1,10 @@
-import { styled, Typography } from '@mui/material';
+import {
+  Box,
+  CircularProgress,
+  Divider,
+  styled,
+  Typography,
+} from '@mui/material';
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Card from '../components/Card';
@@ -27,11 +33,22 @@ const Home: FC = () => {
       <Typography variant="h2" my={4} mx={2}>
         All Store
       </Typography>
-      {stores.map(({ id, name, coverImage }) => (
-        <Card key={id} image={coverImage} onClick={() => handleSelectStore(id)}>
-          {name && <Typography variant="h4">{name}</Typography>}
-        </Card>
-      ))}
+      <Divider />
+      {stores.length > 0 ? (
+        stores.map(({ id, name, coverImage }) => (
+          <Card
+            key={id}
+            image={coverImage}
+            onClick={() => handleSelectStore(id)}
+          >
+            {name && <Typography variant="h4">{name}</Typography>}
+          </Card>
+        ))
+      ) : (
+        <Box justifyContent="center" width="100%">
+          <CircularProgress color="success" />
+        </Box>
+      )}
     </PageWrapper>
   );
 };

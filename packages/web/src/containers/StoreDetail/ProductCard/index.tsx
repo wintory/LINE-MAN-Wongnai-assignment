@@ -8,7 +8,7 @@ import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 
 interface CardProps {
   data: MenuDetail;
-  handleClick: (id: number) => void;
+  handleClick: (id: string) => void;
 }
 
 const ContentWrapper = styled(Box)(({ theme }) => ({
