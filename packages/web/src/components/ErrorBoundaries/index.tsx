@@ -37,14 +37,14 @@ const ErrorBoundaries: FC = () => {
           <Button
             color="primary"
             variant="contained"
-            onClick={handleRefreshPage}
+            onClick={handleBackToHome}
           >
             <Typography variant="h5">Back to Home</Typography>
           </Button>
           <Button
             color="primary"
             variant="outlined"
-            onClick={handleBackToHome}
+            onClick={handleRefreshPage}
             sx={{ mt: 2 }}
           >
             <Typography variant="h5">Refresh Page</Typography>
