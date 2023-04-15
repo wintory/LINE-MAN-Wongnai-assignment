@@ -37,9 +37,7 @@ export type StoreValue = {
     readonly open: string;
     readonly close: string;
   };
-  readonly menus?: string[];
+  readonly menus?: MenuDetail;
   readonly page: number;
   readonly limit: number;
 };
-
-export type StoreWithMenuData = StoreValue & { menus: MenuDetail };

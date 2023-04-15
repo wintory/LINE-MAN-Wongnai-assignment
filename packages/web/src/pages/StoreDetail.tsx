@@ -5,6 +5,7 @@ import FullScreenLoading from '../components/FullScreenLoading';
 import PageWrapper from '../components/PageWrapper';
 import useStoreDetail from '../hooks/useStoreDetail';
 import ProductCard from '../containers/StoreDetail/ProductCard';
+import { MenuDetail } from '../types/store';
 
 const Image = styled('img')(({ theme }) => ({
   width: '100%',
@@ -39,7 +40,8 @@ const StatusChip = styled(Chip)<{ isActive: boolean }>(
 const StoreDetail: FC = () => {
   const params = useParams();
   const { storeId } = params;
-  const { storeDetail, isActiveStore } = useStoreDetail(storeId);
+  const { storeDetail, isActiveStore, handleGetFullMenu } =
+    useStoreDetail(storeId);
 
   if (!storeDetail) return <FullScreenLoading />;
 
@@ -73,11 +75,11 @@ const StoreDetail: FC = () => {
         </ContentWrapper>
       </Box>
       <Box display="block">
-        {storeDetail.menus.map(data => (
-          <>
-            <ProductCard data={data} />
-            <Divider />
-          </>
+        {storeDetail.menus.map((data: MenuDetail, index: number) => (
+          <Box key={data.id}>
+            <ProductCard data={data} handleClick={handleGetFullMenu} />
+            {index !== storeDetail.menus.length - 1 && <Divider />}
+          </Box>
         ))}
       </Box>
     </PageWrapper>
