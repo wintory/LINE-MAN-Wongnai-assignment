@@ -105,6 +105,7 @@ const StoreController = {
         );
 
         res.json(menuFullDetail);
+        return;
       }
 
       res.status(404).json({

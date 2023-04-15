@@ -1,11 +1,13 @@
 import express, { Application } from 'express';
 import AppConfig from './config/app';
 import Routes from './routes';
+import cors from 'cors';
 
 const app: Application = express();
 const port = AppConfig.port;
 
 app.use(Routes);
+app.use(cors());
 
 try {
   app.listen(port, (): void => {
