@@ -1,14 +1,11 @@
-import axios from 'axios';
-import { FullMenuDetail, MenuDetail, StoreValue } from '../types/store';
-import ServiceConfig from '../configs/service';
+import { FullMenuDetail, StoreValue } from '../types/store';
+import ApiClient from './client';
 
 export const fetchAllStore = async () => {
   try {
-    const data: StoreValue[] = await axios
-      .get(`${ServiceConfig.API_GATEWAY_PATH}/api/store`)
-      .then(response => {
-        return response.data.stores;
-      });
+    const data: StoreValue[] = await ApiClient.get(`/store`).then(response => {
+      return response.data.stores;
+    });
 
     return data;
   } catch (error) {
@@ -18,11 +15,11 @@ export const fetchAllStore = async () => {
 
 export const fetchStoreDetail = async (id: number | string) => {
   try {
-    const data: StoreValue = await axios
-      .get(`${ServiceConfig.API_GATEWAY_PATH}/api/store/${id}`)
-      .then(response => {
+    const data: StoreValue = await ApiClient.get(`/store/${id}`).then(
+      response => {
         return response.data;
-      });
+      }
+    );
 
     return data;
   } catch (error) {
@@ -35,11 +32,11 @@ export const fetchMoreStoreDetail = async (
   page: number
 ) => {
   try {
-    const data: StoreValue = await await axios
-      .get(`${ServiceConfig.API_GATEWAY_PATH}/api/store/${id}?page=${page}`)
-      .then(response => {
-        return response.data;
-      });
+    const data: StoreValue = await ApiClient.get(
+      `/store/${id}?page=${page}`
+    ).then(response => {
+      return response.data;
+    });
 
     return data;
   } catch (error) {
@@ -52,8 +49,9 @@ export const fetchFullMenuDetail = async (
   menuName: string
 ) => {
   try {
-    const data: FullMenuDetail = await axios
-      .get(`${ServiceConfig.API_GATEWAY_PATH}/api/store/${storeId}/${menuName}`)
+    const data: FullMenuDetail = await ApiClient.get(
+      `/store/${storeId}/${menuName}`
+    )
       .then(response => {
         return response.data;
       })

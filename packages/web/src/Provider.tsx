@@ -6,15 +6,19 @@ import { BrowserRouter } from 'react-router-dom';
 import ErrorBoundaries from './components/ErrorBoundaries';
 import { getGlobalStyle } from './styles/globalStyle';
 import theme from './styles/theme';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryClient } from './services/react-query';
 
 const Provider: FC = ({ children }) => {
   return (
     <>
       <GlobalStyles styles={getGlobalStyle(theme)} />
       <ErrorBoundary fallback={<ErrorBoundaries />}>
-        <ThemeProvider theme={theme}>
-          <BrowserRouter>{children}</BrowserRouter>
-        </ThemeProvider>
+        <QueryClientProvider client={queryClient}>
+          <ThemeProvider theme={theme}>
+            <BrowserRouter>{children}</BrowserRouter>
+          </ThemeProvider>
+        </QueryClientProvider>
       </ErrorBoundary>
     </>
   );
