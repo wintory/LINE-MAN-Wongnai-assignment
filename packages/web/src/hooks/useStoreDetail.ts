@@ -63,13 +63,15 @@ const useStoreDetail = (storeId?: number | string) => {
   const handleGetFullMenu = useCallback(
     async (storeId: number, menuName: string) => {
       setIsFetching(true);
+      const shortData = storeDetail?.menus.find(({ id }) => id === menuName);
       const data: FullMenuDetail | undefined = await fetchFullMenuDetail(
         storeId,
         menuName
       );
 
       if (data) {
-        setSelectedMenu(data);
+        // Note: we cannot use all key of full data because some key was not the same value as short e.g. sold
+        setSelectedMenu({ ...data, ...shortData });
         setIsOpenPopup(true);
       }
       setIsFetching(false);

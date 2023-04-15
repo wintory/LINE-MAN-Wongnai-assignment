@@ -116,11 +116,15 @@ const MenuDetailPopup: FC<MenuDetailPopupProps> = ({
                       <Typography variant="h5">{label}</Typography>
                     )}
                     <Divider />
-                    {choices.map(({ label }) => (
-                      <Typography variant="body1" pt={2}>
-                        - {label}
-                      </Typography>
-                    ))}
+                    <ul>
+                      {choices.map(({ label }) => (
+                        <li>
+                          <Typography variant="body1" pt={2}>
+                            {label}
+                          </Typography>
+                        </li>
+                      ))}
+                    </ul>
                   </>
                 ))}
               </Box>

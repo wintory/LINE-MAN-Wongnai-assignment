@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { MenuDetail, StoreValue } from '../types/store';
+import { FullMenuDetail, MenuDetail, StoreValue } from '../types/store';
 import ServiceConfig from '../configs/service';
 
 export const fetchAllStore = async () => {
@@ -52,7 +52,7 @@ export const fetchFullMenuDetail = async (
   menuName: string
 ) => {
   try {
-    const data: MenuDetail = await axios
+    const data: FullMenuDetail = await axios
       .get(`${ServiceConfig.API_GATEWAY_PATH}/api/store/${storeId}/${menuName}`)
       .then(response => {
         return response.data;
