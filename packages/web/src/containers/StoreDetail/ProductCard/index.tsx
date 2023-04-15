@@ -1,10 +1,12 @@
 import { Box, Chip, styled, Typography, useTheme } from '@mui/material';
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import Card from '../../../components/Card';
 import { MenuDetail } from '../../../types/store';
 import DangerousIcon from '@mui/icons-material/Dangerous';
 import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
+import { getIsActiveTime } from '../../../helpers/store';
+import { OUT_OF_STOCK_LIMIT, POPULAR_LIMIT } from '../../../constants';
 
 interface CardProps {
   data: MenuDetail;
@@ -36,10 +38,23 @@ const StatusChip = styled(Chip)(({ theme }) => ({
 
 const ProductCard: FC<CardProps> = ({ data, handleClick }) => {
   const theme = useTheme();
-  const { id, totalInStock, name, fullPrice, sold } = data;
-  const isOutOfStock = totalInStock <= 0;
-  const isNearlyOutOfStock = totalInStock <= 5 && totalInStock > 0;
-  const isPopularProduct = sold > 100;
+  const { id, totalInStock, name, fullPrice, sold, discountedTimePeriod } =
+    data;
+
+  const isOutOfStock = useMemo(
+    () => totalInStock <= OUT_OF_STOCK_LIMIT,
+    [totalInStock]
+  );
+  const isOnDiscounted = useMemo(
+    () =>
+      getIsActiveTime(discountedTimePeriod?.begin, discountedTimePeriod?.end),
+    [discountedTimePeriod]
+  );
+  const isNearlyOutOfStock = useMemo(
+    () => totalInStock <= 5 && totalInStock > OUT_OF_STOCK_LIMIT,
+    [totalInStock]
+  );
+  const isPopularProduct = useMemo(() => sold > POPULAR_LIMIT, [sold]);
 
   return (
     <Card
@@ -54,6 +69,14 @@ const ProductCard: FC<CardProps> = ({ data, handleClick }) => {
         <Typography variant="body1" color="text.secondary">
           price: {fullPrice || '-'} Baht
         </Typography>
+        {isOnDiscounted && !isOutOfStock && (
+          <StatusChip
+            avatar={<SellIcon sx={{ fill: theme.palette.common.white }} />}
+            variant="filled"
+            color="warning"
+            label="Sale!!"
+          />
+        )}
         {isPopularProduct && (
           <StatusChip
             avatar={
@@ -63,7 +86,7 @@ const ProductCard: FC<CardProps> = ({ data, handleClick }) => {
             }
             variant="filled"
             color="warning"
-            label="Popular"
+            label="Popular!!"
           />
         )}
         {isOutOfStock && (

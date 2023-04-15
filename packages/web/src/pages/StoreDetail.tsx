@@ -30,7 +30,7 @@ const ContentWrapper = styled('div')(() => ({
   padding: '1.6rem',
 }));
 
-const StatusChip = styled(Chip)<{ isActive: boolean }>(
+export const StatusChip = styled(Chip)<{ isActive: boolean }>(
   ({ theme, isActive }) => ({
     marginTop: '1.6rem',
     padding: '1.6rem',

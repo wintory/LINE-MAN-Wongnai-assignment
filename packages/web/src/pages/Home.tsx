@@ -11,6 +11,8 @@ import Card from '../components/Card';
 import PageWrapper from '../components/PageWrapper';
 import useStore from '../hooks/useStore';
 import HeaderImage from '@assets/images/lineman-header.png';
+import { getIsActiveTime } from '../helpers/store';
+import { StatusChip } from './StoreDetail';
 
 const CoverImage = styled('img')(({ theme }) => ({
   width: '100%',
@@ -35,15 +37,36 @@ const Home: FC = () => {
       </Typography>
       <Divider />
       {stores.length > 0 ? (
-        stores.map(({ id, name, coverImage }) => (
-          <Card
-            key={id}
-            image={coverImage}
-            onClick={() => handleSelectStore(id)}
-          >
-            {name && <Typography variant="h4">{name}</Typography>}
-          </Card>
-        ))
+        stores.map(({ id, name, coverImage, activeTimePeriod }) => {
+          const isActiveStore: boolean =
+            getIsActiveTime(activeTimePeriod?.open, activeTimePeriod?.close) ||
+            false;
+
+          return (
+            <Card
+              key={id}
+              image={coverImage}
+              disabled={!isActiveStore}
+              onClick={() => handleSelectStore(id)}
+            >
+              {name && <Typography variant="h4">{name}</Typography>}
+              <StatusChip
+                size="medium"
+                isActive={isActiveStore}
+                color={isActiveStore ? 'success' : 'default'}
+                label={isActiveStore ? 'Open' : 'Open Soon'}
+              />
+              <Box>
+                <Typography variant="h5" pt={2}>
+                  {`Open time: ${activeTimePeriod?.open || '-'}`}
+                </Typography>
+                <Typography variant="h5">
+                  {`Close time: ${activeTimePeriod?.close || '-'}`}
+                </Typography>
+              </Box>
+            </Card>
+          );
+        })
       ) : (
         <Box display="flex" justifyContent="center" width="100%" pt={6}>
           <CircularProgress color="success" />
