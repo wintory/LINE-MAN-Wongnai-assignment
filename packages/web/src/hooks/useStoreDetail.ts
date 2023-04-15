@@ -71,7 +71,7 @@ const useStoreDetail = (storeId?: number | string) => {
 
       if (data) {
         // Note: we cannot use all key of full data because some key was not the same value as short e.g. sold
-        setSelectedMenu({ ...data, ...shortData });
+        setSelectedMenu({ ...data, sold: shortData?.sold || data.sold });
         setIsOpenPopup(true);
       }
       setIsFetching(false);

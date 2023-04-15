@@ -73,6 +73,9 @@ const MenuDetailPopup: FC<MenuDetailPopupProps> = ({
         aria-describedby="menu-dialog"
       >
         <Box position="relative">
+          <Box position="absolute" left="1.6rem">
+            <MultipleStatusChip data={data} />
+          </Box>
           <CloseIcon
             onClick={onClose}
             sx={{
@@ -120,9 +123,6 @@ const MenuDetailPopup: FC<MenuDetailPopupProps> = ({
                   price: {data?.fullPrice || '-'} Baht
                 </Typography>
               )}
-              <Box>
-                <MultipleStatusChip data={data} />
-              </Box>
             </Box>
             {(data?.options || []).length > 0 && (
               <Box
