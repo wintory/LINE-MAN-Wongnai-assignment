@@ -48,6 +48,7 @@ const MultipleStatusChip: FC<MultipleStatusChipProps> = ({ data }) => {
       {isOnDiscounted && !isOutOfStock && (
         <StatusChip
           avatar={<SellIcon sx={{ fill: theme.palette.common.white }} />}
+          sx={{ maxWidth: 'fit-content' }}
           variant="filled"
           color="warning"
           label={`${discountedPercent}% off!!`}
@@ -60,6 +61,7 @@ const MultipleStatusChip: FC<MultipleStatusChipProps> = ({ data }) => {
               sx={{ fill: theme.palette.common.white }}
             />
           }
+          sx={{ maxWidth: 'fit-content' }}
           variant="filled"
           color="warning"
           label="Popular!!"
@@ -68,6 +70,7 @@ const MultipleStatusChip: FC<MultipleStatusChipProps> = ({ data }) => {
       {isOutOfStock && (
         <StatusChip
           avatar={<DangerousIcon />}
+          sx={{ maxWidth: 'fit-content' }}
           variant="filled"
           label="Out of stock"
         />
@@ -79,6 +82,7 @@ const MultipleStatusChip: FC<MultipleStatusChipProps> = ({ data }) => {
               sx={{ fill: theme.palette.common.white }}
             />
           }
+          sx={{ maxWidth: 'fit-content' }}
           variant="filled"
           color="error"
           label="Nearly out of stock"

@@ -55,6 +55,7 @@ const Home: FC = () => {
                 isActive={isActiveStore}
                 color={isActiveStore ? 'success' : 'default'}
                 label={isActiveStore ? 'Open' : 'Open Soon'}
+                sx={{ maxWidth: 'fit-content' }}
               />
               <Box>
                 <Typography variant="h5" pt={2}>
