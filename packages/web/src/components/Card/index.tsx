@@ -38,6 +38,8 @@ const Card: FC<CardProps> = ({
           alt="media-image"
           sx={{
             width: { xs: '8rem', md: '20rem' },
+            height: { xs: '8rem', md: '20rem' },
+            objectFit: 'cover',
             borderRadius: '1.6rem',
           }}
         />

@@ -77,7 +77,10 @@ const StoreDetail: FC = () => {
       <Box display="block">
         {storeDetail.menus.map((data: MenuDetail, index: number) => (
           <Box key={data.id}>
-            <ProductCard data={data} handleClick={handleGetFullMenu} />
+            <ProductCard
+              data={data}
+              handleClick={() => handleGetFullMenu(storeDetail?.id, data?.id)}
+            />
             {index !== storeDetail.menus.length - 1 && <Divider />}
           </Box>
         ))}
