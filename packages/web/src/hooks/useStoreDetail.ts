@@ -5,7 +5,7 @@ import { getIsActiveTime } from '../helpers/store';
 
 const useStoreDetail = (storeId?: number | string) => {
   // Todo: add state type
-  const [storeDetail, setStoreDetail] = useState<any>();
+  const [storeDetail, setStoreDetail] = useState<StoreWithMenuData>();
   const isActiveStore =
     getIsActiveTime(
       storeDetail?.activeTimePeriod?.open,
@@ -29,13 +29,17 @@ const useStoreDetail = (storeId?: number | string) => {
     [storeId]
   );
 
+  const handleGetFullMenu = (id: number) => {
+    return {};
+  };
+
   useEffect(() => {
     if (storeId) {
       getStoreDetail(storeId);
     }
   }, [storeId]);
 
-  return { storeDetail, isActiveStore };
+  return { storeDetail, isActiveStore, handleGetFullMenu };
 };
 
 export default useStoreDetail;
