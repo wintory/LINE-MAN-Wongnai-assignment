@@ -75,7 +75,7 @@ const StoreController = {
       const result = {
         ...storeDetail,
         menus: menuValues.length > 0 ? menuValues : storeDetail?.menus,
-        page,
+        page: +page,
         limit,
       };
 

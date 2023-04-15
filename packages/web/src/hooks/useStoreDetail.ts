@@ -8,6 +8,7 @@ const useStoreDetail = (storeId?: number | string) => {
   const [selectedMenu, setSelectedMenu] = useState<MenuDetail>();
   const [isOpenPopup, setIsOpenPopup] = useState<boolean>(false);
   const [isFetching, setIsFetching] = useState<boolean>(false);
+  const [hasNextPage, setHasNextPage] = useState<boolean>(true);
 
   const isActiveStore = useMemo(() => {
     return (
@@ -35,6 +36,35 @@ const useStoreDetail = (storeId?: number | string) => {
     },
     [storeId]
   );
+
+  const handleLoadMoreStoreDetail = useCallback(
+    async (id?: number, page?: number) => {
+      if (!id || !page) return;
+
+      setIsFetching(true);
+      const data: StoreValue = await axios
+        .get(`http://localhost:8081/api/store/${id}?page=${page}`)
+        .then(response => {
+          return response.data;
+        })
+        .catch(error => {
+          console.error(error);
+          return undefined;
+        });
+
+      if (data?.menus) {
+        console.log('aa', data?.menus);
+
+        setStoreDetail({
+          ...data,
+          menus: [...(storeDetail?.menus || []), ...data.menus],
+        });
+      }
+      setIsFetching(false);
+    },
+    [storeId, storeDetail?.menus]
+  );
+  console.log({ menu: storeDetail?.menus });
 
   const handleGetFullMenu = useCallback(
     async (storeId: number, menuName: string) => {
@@ -68,9 +98,11 @@ const useStoreDetail = (storeId?: number | string) => {
     storeDetail,
     isActiveStore,
     handleGetFullMenu,
+    handleLoadMoreStoreDetail,
     selectedMenu,
     isOpenPopup,
     isFetching,
+    hasNextPage,
   };
 };
 

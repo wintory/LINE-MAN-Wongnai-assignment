@@ -1,27 +1,27 @@
 export type MenuOption = {
-  readonly label: string;
-  readonly choices: [
+  label: string;
+  choices: [
     {
-      readonly label: string;
-      readonly choices: {
-        readonly label: string;
+      label: string;
+      choices: {
+        label: string;
       }[];
     }
   ];
 };
 
 export type MenuDetail = {
-  readonly name: string;
-  readonly id: string;
-  readonly thumbnailImage?: string;
-  readonly fullPrice: number;
-  readonly discountedPercent: number;
-  readonly discountedTimePeriod?: {
-    readonly begin: string;
-    readonly end: string;
+  name: string;
+  id: string;
+  thumbnailImage?: string;
+  fullPrice: number;
+  discountedPercent: number;
+  discountedTimePeriod?: {
+    begin: string;
+    end: string;
   };
-  readonly sold: number;
-  readonly totalInStock: number;
+  sold: number;
+  totalInStock: number;
 };
 
 export type FullMenuDetail = MenuDetail & {
@@ -30,14 +30,14 @@ export type FullMenuDetail = MenuDetail & {
 };
 
 export type StoreValue = {
-  readonly name: string;
-  readonly id: number;
-  readonly coverImage: string;
-  readonly activeTimePeriod: {
-    readonly open: string;
-    readonly close: string;
+  name: string;
+  id: number;
+  coverImage: string;
+  activeTimePeriod: {
+    open: string;
+    close: string;
   };
-  readonly menus?: MenuDetail[];
-  readonly page: number;
-  readonly limit: number;
+  menus: MenuDetail[];
+  page: number;
+  limit: number;
 };

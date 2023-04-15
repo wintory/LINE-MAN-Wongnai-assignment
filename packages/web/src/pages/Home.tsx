@@ -45,7 +45,7 @@ const Home: FC = () => {
           </Card>
         ))
       ) : (
-        <Box justifyContent="center" width="100%">
+        <Box display="flex" justifyContent="center" width="100%" pt={6}>
           <CircularProgress color="success" />
         </Box>
       )}

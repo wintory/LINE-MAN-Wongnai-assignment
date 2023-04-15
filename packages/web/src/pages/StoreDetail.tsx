@@ -13,6 +13,7 @@ import PageWrapper from '../components/PageWrapper';
 import useStoreDetail from '../hooks/useStoreDetail';
 import ProductCard from '../containers/StoreDetail/ProductCard';
 import { MenuDetail } from '../types/store';
+import useInfiniteScroll from 'react-infinite-scroll-hook';
 
 const Image = styled('img')(({ theme }) => ({
   width: '100%',
@@ -47,8 +48,22 @@ const StatusChip = styled(Chip)<{ isActive: boolean }>(
 const StoreDetail: FC = () => {
   const params = useParams();
   const { storeId } = params;
-  const { storeDetail, isActiveStore, handleGetFullMenu, isFetching } =
-    useStoreDetail(storeId);
+  const {
+    storeDetail,
+    isActiveStore,
+    handleGetFullMenu,
+    handleLoadMoreStoreDetail,
+    isFetching,
+    hasNextPage,
+  } = useStoreDetail(storeId);
+  const [loadingRef] = useInfiniteScroll({
+    loading: isFetching,
+    hasNextPage,
+    onLoadMore: () =>
+      handleLoadMoreStoreDetail(storeDetail?.id, (storeDetail?.page || 0) + 1),
+    disabled: !hasNextPage,
+    rootMargin: '0px 0px 400px 0px',
+  });
   const storeMenu = useMemo(() => {
     return storeDetail?.menus || [];
   }, [storeDetail?.menus]);
@@ -105,8 +120,14 @@ const StoreDetail: FC = () => {
               {index !== (storeDetail.menus || []).length - 1 && <Divider />}
             </Box>
           ))}
-        {isFetching && (
-          <Box justifyContent="center" width="100%">
+        {(isFetching || hasNextPage) && (
+          <Box
+            ref={loadingRef}
+            display="flex"
+            justifyContent="center"
+            width="100%"
+            py={6}
+          >
             <CircularProgress color="success" />
           </Box>
         )}
