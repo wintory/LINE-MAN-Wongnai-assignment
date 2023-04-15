@@ -5,6 +5,8 @@ const Wrapper = styled('div')(() => ({
   maxWidth: '133.6rem',
   margin: 'auto',
   height: '100%',
+  boxSizing: 'border-box',
+  overflowX: 'hidden',
 }));
 
 const PageWrapper: FC = ({ children }) => {

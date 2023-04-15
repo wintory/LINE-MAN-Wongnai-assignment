@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useCallback, useState, useEffect } from 'react';
-import { getIsActiveTime } from '../utilities/store';
+import { StoreWithMenuData } from '../types/store';
+import { getIsActiveTime } from '../helpers/store';
 
 const useStoreDetail = (storeId?: number | string) => {
   // Todo: add state type
@@ -14,7 +15,7 @@ const useStoreDetail = (storeId?: number | string) => {
   const getStoreDetail = useCallback(
     async (id: number | string) => {
       // Todo: add data type
-      const data = await axios
+      const data: StoreWithMenuData = await axios
         .get(`http://localhost:8081/api/store/${id}`)
         .then(response => {
           return response.data;
@@ -34,7 +35,7 @@ const useStoreDetail = (storeId?: number | string) => {
     }
   }, [storeId]);
 
-  return { storeDetail };
+  return { storeDetail, isActiveStore };
 };
 
 export default useStoreDetail;

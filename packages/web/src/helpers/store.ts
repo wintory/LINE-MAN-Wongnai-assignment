@@ -1,10 +1,24 @@
 import dayjs from 'dayjs';
+import isBetween from 'dayjs/plugin/isBetween';
 
-export const getIsActiveTime = (openTime: string, closeTime: string) => {
-  // const openDateTime = new Date(null, null, null, [...openTime.split(':')]);
-  // const closeDateTime = new Date(null, null, null, [...closeTime.split(':')]);
-  const result = dayjs(openTime).diff(dayjs(closeTime), 'hours');
-  console.log({ result });
+dayjs.extend(isBetween);
 
-  return false;
+export const getIsActiveTime = (openTime?: string, closeTime?: string) => {
+  if (!openTime && !closeTime) return false;
+  if (openTime && !closeTime) return true;
+
+  const currentDate = dayjs().format('YYYY-MM-DD');
+  const openDateTime = dayjs(`${currentDate} ${openTime}`);
+  const closedDateTime = dayjs(
+    `${currentDate} ${closeTime}`,
+    'DD-MM-YYYY HH:mm'
+  );
+
+  const isBetweenOpenAndClosedTime = dayjs().isBetween(
+    openDateTime,
+    closedDateTime,
+    'minutes'
+  );
+
+  return isBetweenOpenAndClosedTime;
 };
