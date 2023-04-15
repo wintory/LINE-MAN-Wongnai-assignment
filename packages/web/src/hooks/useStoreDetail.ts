@@ -52,19 +52,18 @@ const useStoreDetail = (storeId?: number | string) => {
           return undefined;
         });
 
-      if (data?.menus) {
-        console.log('aa', data?.menus);
-
+      if (data?.menus.length > 0) {
         setStoreDetail({
           ...data,
           menus: [...(storeDetail?.menus || []), ...data.menus],
         });
+      } else {
+        setHasNextPage(false);
       }
       setIsFetching(false);
     },
     [storeId, storeDetail?.menus]
   );
-  console.log({ menu: storeDetail?.menus });
 
   const handleGetFullMenu = useCallback(
     async (storeId: number, menuName: string) => {

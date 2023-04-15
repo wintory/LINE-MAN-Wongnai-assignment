@@ -3,5 +3,9 @@ export const getPaginationData = (
   pageSize: number,
   pageNumber: number
 ) => {
-  return data.slice((pageNumber - 1) * pageSize, pageNumber * pageSize);
+  const startIndex = (pageNumber - 1) * pageSize;
+  if (data.length < startIndex) return [];
+  if (pageSize > data.length) return data;
+
+  return data.slice(startIndex, pageNumber * pageSize);
 };

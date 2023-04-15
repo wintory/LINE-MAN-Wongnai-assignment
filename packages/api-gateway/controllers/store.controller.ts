@@ -7,7 +7,7 @@ import axios from 'axios';
 import { Request, Response } from 'express';
 import AppConfig from '../config/app';
 import { MockedStoreId } from '../mock/store';
-import { MenuDetail, StoreValue, StoreWithMenuDatas } from '../types/store';
+import { MenuDetail, StoreValue, StoreWithMenuData } from '../types/store';
 
 const StoreController = {
   getAllStore: async (req: Request, res: Response) => {
@@ -46,35 +46,40 @@ const StoreController = {
       }
 
       const uri = `${AppConfig.apiBaseUrl}/api/restaurants/${storeId}.json`;
-      const storeDetail: StoreWithMenuDatas = await axios(uri).then(
-        response => {
-          return response?.data;
-        }
-      );
+      const storeDetail: StoreWithMenuData = await axios(uri).then(response => {
+        return response?.data;
+      });
 
       const menus: string[] = Array.from(new Set(storeDetail?.menus)) || []; // remove duplicated menu
-      const menuValues: string[] = [];
+      const menuValues: MenuDetail[] = [];
 
       if (storeDetail && menus) {
         const menuNames = getPaginationData(menus, +limit, +page);
+        const currentMenu: MenuDetail[] = [];
 
         if (menuNames.length > 0) {
           await Promise.all(
             menuNames.map(async value => {
               const menuUri = `${AppConfig.apiBaseUrl}/api/restaurants/${storeId}/menus/${value}/short.json`;
-              const menuDetail = await axios(menuUri).then(response => {
-                return response?.data;
-              });
+              const menuDetail: MenuDetail = await axios(menuUri).then(
+                response => {
+                  return response?.data;
+                }
+              );
 
-              if (menuDetail) menuValues.push(menuDetail);
+              if (menuDetail) {
+                currentMenu.push(menuDetail);
+              }
             })
           );
+
+          menuValues.push(...currentMenu);
         }
       }
 
       const result = {
         ...storeDetail,
-        menus: menuValues.length > 0 ? menuValues : storeDetail?.menus,
+        menus: menuValues,
         page: +page,
         limit,
       };

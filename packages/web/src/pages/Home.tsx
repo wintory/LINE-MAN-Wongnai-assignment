@@ -30,7 +30,7 @@ const Home: FC = () => {
   return (
     <PageWrapper>
       <CoverImage alt="home-cover-image" src={HeaderImage} />
-      <Typography variant="h2" my={4} mx={2}>
+      <Typography variant="h2" mt={4} mx={2}>
         All Store
       </Typography>
       <Divider />
