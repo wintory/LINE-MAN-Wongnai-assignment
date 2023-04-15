@@ -36,8 +36,8 @@ const StoreController = {
   getStoreDetail: async (req: Request, res: Response) => {
     try {
       const storeId = req.params.storeId || '';
-      let page = req?.query?.page || DEFAULT_STORE_PAGE;
-      let limit = req?.query?.limit || DEFAULT_STORE_PAGE_LIMIT;
+      const page = req?.query?.page || DEFAULT_STORE_PAGE;
+      const limit = req?.query?.limit || DEFAULT_STORE_PAGE_LIMIT;
 
       if (!storeId) {
         res.status(404).json({
@@ -52,7 +52,7 @@ const StoreController = {
         }
       );
 
-      const menus: string[] = storeDetail?.menus || [];
+      const menus: string[] = Array.from(new Set(storeDetail?.menus)) || []; // remove duplicated menu
       const menuValues: string[] = [];
 
       if (storeDetail && menus) {
