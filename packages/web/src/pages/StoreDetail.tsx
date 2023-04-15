@@ -14,6 +14,7 @@ import useStoreDetail from '../hooks/useStoreDetail';
 import ProductCard from '../containers/StoreDetail/ProductCard';
 import { MenuDetail } from '../types/store';
 import useInfiniteScroll from 'react-infinite-scroll-hook';
+import MenuDetailPopup from '../containers/StoreDetail/MenuDetailPopup';
 
 const Image = styled('img')(({ theme }) => ({
   width: '100%',
@@ -55,6 +56,9 @@ const StoreDetail: FC = () => {
     handleLoadMoreStoreDetail,
     isFetching,
     hasNextPage,
+    isOpenPopup,
+    handleClosePopup,
+    selectedMenu,
   } = useStoreDetail(storeId);
   const [loadingRef] = useInfiniteScroll({
     loading: isFetching,
@@ -72,6 +76,11 @@ const StoreDetail: FC = () => {
 
   return (
     <PageWrapper>
+      <MenuDetailPopup
+        isOpen={isOpenPopup}
+        onClose={handleClosePopup}
+        data={selectedMenu}
+      />
       <Box display="block">
         <Image alt="store-cover-image" src={storeDetail?.coverImage} />
         <ContentWrapper>

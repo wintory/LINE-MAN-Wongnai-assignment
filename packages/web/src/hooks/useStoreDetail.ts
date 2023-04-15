@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useCallback, useState, useEffect, useMemo } from 'react';
-import { MenuDetail, StoreValue } from '../types/store';
+import { FullMenuDetail, MenuDetail, StoreValue } from '../types/store';
 import { getIsActiveTime } from '../helpers/store';
 import {
   fetchFullMenuDetail,
@@ -10,7 +10,9 @@ import {
 
 const useStoreDetail = (storeId?: number | string) => {
   const [storeDetail, setStoreDetail] = useState<StoreValue>();
-  const [selectedMenu, setSelectedMenu] = useState<MenuDetail>();
+  const [selectedMenu, setSelectedMenu] = useState<
+    FullMenuDetail | undefined
+  >();
   const [isOpenPopup, setIsOpenPopup] = useState<boolean>(false);
   const [isFetching, setIsFetching] = useState<boolean>(false);
   const [hasNextPage, setHasNextPage] = useState<boolean>(true);
@@ -61,19 +63,24 @@ const useStoreDetail = (storeId?: number | string) => {
   const handleGetFullMenu = useCallback(
     async (storeId: number, menuName: string) => {
       setIsFetching(true);
-      const data: MenuDetail | undefined = await fetchFullMenuDetail(
+      const data: FullMenuDetail | undefined = await fetchFullMenuDetail(
         storeId,
         menuName
       );
 
       if (data) {
-        setIsOpenPopup(true);
         setSelectedMenu(data);
+        setIsOpenPopup(true);
       }
       setIsFetching(false);
     },
     [storeId]
   );
+
+  const handleClosePopup = () => {
+    setSelectedMenu(undefined);
+    setIsOpenPopup(false);
+  };
 
   useEffect(() => {
     if (storeId) {
@@ -90,6 +97,7 @@ const useStoreDetail = (storeId?: number | string) => {
     isOpenPopup,
     isFetching,
     hasNextPage,
+    handleClosePopup,
   };
 };
 
