@@ -26,7 +26,7 @@ const StatusChip = styled(Chip)(({ theme }) => ({
 
 const MultipleStatusChip: FC<MultipleStatusChipProps> = ({ data }) => {
   const theme = useTheme();
-  const { totalInStock, discountedTimePeriod, sold } = data;
+  const { totalInStock, discountedTimePeriod, sold, discountedPercent } = data;
 
   const isOutOfStock = useMemo(
     () => totalInStock <= OUT_OF_STOCK_LIMIT,
@@ -50,7 +50,7 @@ const MultipleStatusChip: FC<MultipleStatusChipProps> = ({ data }) => {
           avatar={<SellIcon sx={{ fill: theme.palette.common.white }} />}
           variant="filled"
           color="warning"
-          label="Sale!!"
+          label={`${discountedPercent}% off!!`}
         />
       )}
       {isPopularProduct && (

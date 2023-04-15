@@ -10,11 +10,13 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
-import { FC, forwardRef, ReactElement, Ref } from 'react';
+import { FC, forwardRef, ReactElement, Ref, useMemo } from 'react';
 import { FullMenuDetail } from '../../../types/store';
 import NoImage from '@assets/images/no_image_available.svg';
 import CloseIcon from '@mui/icons-material/Close';
 import MultipleStatusChip from '../MultipleStatusChip';
+import { getIsActiveTime } from '../../../helpers/store';
+import DiscountText from '../../../components/DiscountText';
 
 interface MenuDetailPopupProps {
   isOpen: boolean;
@@ -37,6 +39,15 @@ const MenuDetailPopup: FC<MenuDetailPopupProps> = ({
   data,
 }) => {
   const theme = useTheme();
+  const isOnDiscounted = useMemo(
+    () =>
+      getIsActiveTime(
+        data?.discountedTimePeriod?.begin,
+        data?.discountedTimePeriod?.end
+      ),
+    [data?.discountedTimePeriod]
+  );
+
   if (!data) {
     return (
       <Dialog
@@ -96,8 +107,18 @@ const MenuDetailPopup: FC<MenuDetailPopupProps> = ({
               justifyContent="space-between"
               pt={2}
             >
-              {data?.fullPrice && (
-                <Typography variant="h5">{data.fullPrice} Baht</Typography>
+              {isOnDiscounted ? (
+                <DiscountText
+                  fullPrice={data?.fullPrice}
+                  discountPrice={
+                    data?.fullPrice -
+                    (data?.discountedPercent / 100) * data?.fullPrice
+                  }
+                />
+              ) : (
+                <Typography variant="body1" color="text.secondary">
+                  price: {data?.fullPrice || '-'} Baht
+                </Typography>
               )}
               <Box>
                 <MultipleStatusChip data={data} />

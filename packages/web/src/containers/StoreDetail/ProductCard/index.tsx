@@ -1,7 +1,9 @@
 import { Box, styled, Typography } from '@mui/material';
 import { FC, useMemo } from 'react';
 import Card from '../../../components/Card';
+import DiscountText from '../../../components/DiscountText';
 import { OUT_OF_STOCK_LIMIT } from '../../../constants';
+import { getIsActiveTime } from '../../../helpers/store';
 import { MenuDetail } from '../../../types/store';
 import MultipleStatusChip from '../MultipleStatusChip';
 
@@ -22,10 +24,22 @@ const ContentWrapper = styled(Box)(({ theme }) => ({
 }));
 
 const ProductCard: FC<CardProps> = ({ data, handleClick }) => {
-  const { id, totalInStock, name, fullPrice } = data;
+  const {
+    id,
+    totalInStock,
+    name,
+    fullPrice,
+    discountedTimePeriod,
+    discountedPercent,
+  } = data;
   const isOutOfStock = useMemo(
     () => totalInStock <= OUT_OF_STOCK_LIMIT,
     [totalInStock]
+  );
+  const isOnDiscounted = useMemo(
+    () =>
+      getIsActiveTime(discountedTimePeriod?.begin, discountedTimePeriod?.end),
+    [discountedTimePeriod]
   );
 
   return (
@@ -38,9 +52,16 @@ const ProductCard: FC<CardProps> = ({ data, handleClick }) => {
         <Typography gutterBottom variant="subtitle1" component="div">
           {name || ''}
         </Typography>
-        <Typography variant="body1" color="text.secondary">
-          price: {fullPrice || '-'} Baht
-        </Typography>
+        {isOnDiscounted ? (
+          <DiscountText
+            fullPrice={fullPrice}
+            discountPrice={fullPrice - (discountedPercent / 100) * fullPrice}
+          />
+        ) : (
+          <Typography variant="body1" color="text.secondary">
+            price: {fullPrice || '-'} Baht
+          </Typography>
+        )}
         <MultipleStatusChip data={data} />
       </ContentWrapper>
     </Card>
