@@ -1,21 +1,25 @@
 import axios from 'axios';
-import { useCallback, useState, useEffect } from 'react';
-import { StoreWithMenuData } from '../types/store';
+import { useCallback, useState, useEffect, useMemo } from 'react';
+import { MenuDetail, StoreValue } from '../types/store';
 import { getIsActiveTime } from '../helpers/store';
 
 const useStoreDetail = (storeId?: number | string) => {
-  // Todo: add state type
-  const [storeDetail, setStoreDetail] = useState<StoreWithMenuData>();
-  const isActiveStore =
-    getIsActiveTime(
-      storeDetail?.activeTimePeriod?.open,
-      storeDetail?.activeTimePeriod?.close
-    ) || false;
+  const [storeDetail, setStoreDetail] = useState<StoreValue>();
+  const [selectedMenu, setSelectedMenu] = useState<MenuDetail>();
+  const [isOpenPopup, setIsOpenPopup] = useState<boolean>(false);
+
+  const isActiveStore = useMemo(() => {
+    return (
+      getIsActiveTime(
+        storeDetail?.activeTimePeriod?.open,
+        storeDetail?.activeTimePeriod?.close
+      ) || false
+    );
+  }, [storeDetail?.activeTimePeriod]);
 
   const getStoreDetail = useCallback(
     async (id: number | string) => {
-      // Todo: add data type
-      const data: StoreWithMenuData = await axios
+      const data: StoreValue = await axios
         .get(`http://localhost:8081/api/store/${id}`)
         .then(response => {
           return response.data;
@@ -29,9 +33,25 @@ const useStoreDetail = (storeId?: number | string) => {
     [storeId]
   );
 
-  const handleGetFullMenu = (id: number) => {
-    return {};
-  };
+  const handleGetFullMenu = useCallback(
+    async (storeId: number, menuName: string) => {
+      const data: MenuDetail = await axios
+        .get(`http://localhost:8081/api/store/${storeId}/${menuName}`)
+        .then(response => {
+          return response.data;
+        })
+        .catch(error => {
+          console.error(error);
+          return undefined;
+        });
+
+      if (data) {
+        setIsOpenPopup(true);
+        setSelectedMenu(data);
+      }
+    },
+    [storeId]
+  );
 
   useEffect(() => {
     if (storeId) {
@@ -39,7 +59,13 @@ const useStoreDetail = (storeId?: number | string) => {
     }
   }, [storeId]);
 
-  return { storeDetail, isActiveStore, handleGetFullMenu };
+  return {
+    storeDetail,
+    isActiveStore,
+    handleGetFullMenu,
+    selectedMenu,
+    isOpenPopup,
+  };
 };
 
 export default useStoreDetail;
