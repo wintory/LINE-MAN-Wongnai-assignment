@@ -2,6 +2,11 @@ import axios from 'axios';
 import { useCallback, useState, useEffect, useMemo } from 'react';
 import { MenuDetail, StoreValue } from '../types/store';
 import { getIsActiveTime } from '../helpers/store';
+import {
+  fetchFullMenuDetail,
+  fetchMoreStoreDetail,
+  fetchStoreDetail,
+} from '../services/store';
 
 const useStoreDetail = (storeId?: number | string) => {
   const [storeDetail, setStoreDetail] = useState<StoreValue>();
@@ -22,16 +27,11 @@ const useStoreDetail = (storeId?: number | string) => {
   const getStoreDetail = useCallback(
     async (id: number | string) => {
       setIsFetching(true);
-      const data: StoreValue = await axios
-        .get(`http://localhost:8081/api/store/${id}`)
-        .then(response => {
-          return response.data;
-        })
-        .catch(error => {
-          console.error(error);
-          return undefined;
-        });
-      setStoreDetail(data);
+      const data: StoreValue | undefined = await fetchStoreDetail(id);
+
+      if (data) {
+        setStoreDetail(data);
+      }
       setIsFetching(false);
     },
     [storeId]
@@ -42,17 +42,9 @@ const useStoreDetail = (storeId?: number | string) => {
       if (!id || !page) return;
 
       setIsFetching(true);
-      const data: StoreValue = await axios
-        .get(`http://localhost:8081/api/store/${id}?page=${page}`)
-        .then(response => {
-          return response.data;
-        })
-        .catch(error => {
-          console.error(error);
-          return undefined;
-        });
+      const data: StoreValue | undefined = await fetchMoreStoreDetail(id, page);
 
-      if (data?.menus.length > 0) {
+      if (data && data?.menus.length > 0) {
         setStoreDetail({
           ...data,
           menus: [...(storeDetail?.menus || []), ...data.menus],
@@ -60,6 +52,7 @@ const useStoreDetail = (storeId?: number | string) => {
       } else {
         setHasNextPage(false);
       }
+
       setIsFetching(false);
     },
     [storeId, storeDetail?.menus]
@@ -68,15 +61,10 @@ const useStoreDetail = (storeId?: number | string) => {
   const handleGetFullMenu = useCallback(
     async (storeId: number, menuName: string) => {
       setIsFetching(true);
-      const data: MenuDetail = await axios
-        .get(`http://localhost:8081/api/store/${storeId}/${menuName}`)
-        .then(response => {
-          return response.data;
-        })
-        .catch(error => {
-          console.error(error);
-          return undefined;
-        });
+      const data: MenuDetail | undefined = await fetchFullMenuDetail(
+        storeId,
+        menuName
+      );
 
       if (data) {
         setIsOpenPopup(true);

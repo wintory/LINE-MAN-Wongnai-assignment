@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { fetchAllStore } from './../services/store';
 import { useCallback, useState, useEffect } from 'react';
 import { StoreValue } from '../types/store';
 import { getIsActiveTime } from '../helpers/store';
@@ -7,15 +7,7 @@ const useStore = () => {
   const [stores, setStores] = useState<StoreValue[]>();
 
   const getAllStore = useCallback(async () => {
-    const data: StoreValue[] = await axios
-      .get(`http://localhost:8081/api/store`)
-      .then(response => {
-        return response.data.stores;
-      })
-      .catch(error => {
-        console.error(error);
-        return undefined;
-      });
+    const data: StoreValue[] | undefined = await fetchAllStore();
 
     if (data) {
       const result = data.map(storeDetail => {
