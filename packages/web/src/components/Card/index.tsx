@@ -1,20 +1,23 @@
-import { Grid, styled, Typography } from '@mui/material';
-import { bgcolor } from '@mui/system';
-import { FC, ReactNode } from 'react';
+import { Box, CardContent, CardMedia, Stack, styled } from '@mui/material';
+import { FC } from 'react';
+import ImageNotSupportedIcon from '@mui/icons-material/ImageNotSupported';
 
 interface CardProps {
-  image: string;
-  title: string;
-  description?: string;
-  badge?: ReactNode;
+  image?: string;
   onClick?: () => void;
+  disabled: boolean;
 }
 
-const CardWrapper = styled('div')(({ theme }) => ({
+const CardWrapper = styled(Box)(({ theme }) => ({
   bgcolor: theme.palette.common.white,
   width: '100%',
   padding: '1.6rem',
   cursor: 'pointer',
+
+  '&.disabled': {
+    cursor: 'default',
+    opacity: 0.5,
+  },
 
   [theme.breakpoints.up('lg')]: {
     padding: '1.6rem 3.2rem',
@@ -39,18 +42,25 @@ const Image = styled('img')(({ theme }) => ({
   },
 }));
 
-const Card: FC<CardProps> = props => {
+const Card: FC<CardProps> = ({ image, onClick, children, disabled = true }) => {
   return (
-    <CardWrapper onClick={props.onClick}>
-      <Grid container gridTemplateColumns="auto 1fr">
-        <Grid item>{props.image && <Image src={props.image} />}</Grid>
-        <Grid item>
-          {props.title && <Typography variant="h4">{props.title}</Typography>}
-          {props?.description && (
-            <Typography variant="subtitle1">{props.description}</Typography>
-          )}
-        </Grid>
-      </Grid>
+    <CardWrapper onClick={onClick} className={disabled ? 'disabled' : ''}>
+      <CardWrapper>
+        <Stack direction="row">
+          {image ? (
+            <CardMedia
+              component="img"
+              image={image}
+              alt="green iguana"
+              sx={{
+                width: { xs: '8rem', md: '20rem' },
+                borderRadius: '1.6rem',
+              }}
+            />
+          ) : null}
+          <CardContent>{children}</CardContent>
+        </Stack>
+      </CardWrapper>
     </CardWrapper>
   );
 };

@@ -17,10 +17,11 @@ const Home: FC = () => {
       {mockStoreListData.map(({ storeId, name, coverImage }) => (
         <Card
           key={storeId}
-          title={name}
           image={coverImage}
           onClick={() => handleSelectStore(storeId)}
-        />
+        >
+          {name && <Typography variant="h4">{name}</Typography>}
+        </Card>
       ))}
     </PageWrapper>
   );

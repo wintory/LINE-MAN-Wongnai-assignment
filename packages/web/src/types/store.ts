@@ -12,7 +12,7 @@ export type MenuOption = {
 
 export type MenuDetail = {
   readonly name: string;
-  readonly id: string;
+  readonly id: number;
   readonly thumbnailImage?: string;
   readonly fullPrice: number;
   readonly discountedPercent: number;
@@ -37,7 +37,7 @@ export type StoreValue = {
     readonly open: string;
     readonly close: string;
   };
-  readonly menus: string[];
+  readonly menus?: string[];
   readonly page: number;
   readonly limit: number;
 };
