@@ -27,11 +27,11 @@ const PageNotFound: FC = () => {
         <Typography variant="h2" color="common.black">
           404 Page not found
         </Typography>
-        <Typography variant="h4" pt={1} mb={2}>
+        <Typography variant="subtitle1" pt={1} mb={2}>
           Sorry, the page you're looking for doesn't exists.
         </Typography>
         <Button color="secondary" onClick={handleBackToHome}>
-          <Typography variant="h4">Back to Home</Typography>
+          <Typography variant="subtitle1">Back to Home</Typography>
         </Button>
       </PageNotFoundBox>
     </PageWrapper>

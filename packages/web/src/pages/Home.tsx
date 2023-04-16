@@ -49,7 +49,7 @@ const Home: FC = () => {
               disabled={!isActiveStore}
               onClick={() => handleSelectStore(id)}
             >
-              {name && <Typography variant="h4">{name}</Typography>}
+              {name && <Typography variant="subtitle1">{name}</Typography>}
               <StatusChip
                 size="medium"
                 isActive={isActiveStore}
@@ -58,10 +58,10 @@ const Home: FC = () => {
                 sx={{ maxWidth: 'fit-content' }}
               />
               <Box>
-                <Typography variant="h5" pt={2}>
+                <Typography variant="body1" pt={2}>
                   {`Open time: ${activeTimePeriod?.open || '-'}`}
                 </Typography>
-                <Typography variant="h5">
+                <Typography variant="body1">
                   {`Close time: ${activeTimePeriod?.close || '-'}`}
                 </Typography>
               </Box>

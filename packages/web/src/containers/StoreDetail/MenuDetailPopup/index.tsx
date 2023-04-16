@@ -99,7 +99,7 @@ const MenuDetailPopup: FC<MenuDetailPopupProps> = ({
           />
           <DialogContent>
             {data?.name && (
-              <Typography variant="h3" textAlign="center">
+              <Typography variant="body1" textAlign="center">
                 {data.name}
               </Typography>
             )}
@@ -134,7 +134,7 @@ const MenuDetailPopup: FC<MenuDetailPopupProps> = ({
                 {data?.options.map(({ label, choices }) => (
                   <>
                     {data?.name && (
-                      <Typography variant="h5">{label}</Typography>
+                      <Typography variant="subtitle1">{label}</Typography>
                     )}
                     <Divider />
                     <ul>

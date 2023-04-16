@@ -30,7 +30,7 @@ const ErrorBoundaries: FC = () => {
         <Typography variant="h2" color="common.black">
           Something went wrong
         </Typography>
-        <Typography variant="h4" pt={1} mb={2}>
+        <Typography variant="subtitle1" pt={1} mb={2}>
           Please either refresh page or return to home to try again.
         </Typography>
         <Grid display="grid">
@@ -39,7 +39,7 @@ const ErrorBoundaries: FC = () => {
             variant="contained"
             onClick={handleBackToHome}
           >
-            <Typography variant="h5">Back to Home</Typography>
+            <Typography variant="subtitle1">Back to Home</Typography>
           </Button>
           <Button
             color="primary"
@@ -47,7 +47,7 @@ const ErrorBoundaries: FC = () => {
             onClick={handleRefreshPage}
             sx={{ mt: 2 }}
           >
-            <Typography variant="h5">Refresh Page</Typography>
+            <Typography variant="subtitle1">Refresh Page</Typography>
           </Button>
         </Grid>
       </ErrorBox>

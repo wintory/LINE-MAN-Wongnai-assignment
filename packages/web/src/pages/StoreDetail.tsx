@@ -99,17 +99,17 @@ const StoreDetail: FC = () => {
             label={isActiveStore ? 'Open' : 'Open Soon'}
           />
           <Box>
-            <Typography variant="h5" pt={2}>
+            <Typography variant="subtitle1" pt={2}>
               {`Open time: ${storeDetail?.activeTimePeriod?.open || '-'}`}
             </Typography>
-            <Typography variant="h5">
+            <Typography variant="subtitle1">
               {`Close time: ${storeDetail?.activeTimePeriod?.close || '-'}`}
             </Typography>
           </Box>
         </ContentWrapper>
       </Box>
       <Typography
-        variant="h4"
+        variant="subtitle1"
         pt={2}
         pl={2}
         position="relative"

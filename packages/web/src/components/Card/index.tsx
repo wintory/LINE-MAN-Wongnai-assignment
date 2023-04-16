@@ -31,7 +31,7 @@ const Card: FC<CardProps> = ({
 }) => {
   return (
     <CardWrapper onClick={onClick} className={disabled ? 'disabled' : ''}>
-      <Stack direction="row">
+      <Stack direction="row" alignItems="center">
         <CardMedia
           component="img"
           image={image || NoImage}
