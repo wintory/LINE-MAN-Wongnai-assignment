@@ -1,6 +1,5 @@
-import axios from 'axios';
 import { useCallback, useState, useEffect, useMemo } from 'react';
-import { FullMenuDetail, MenuDetail, StoreValue } from '../types/store';
+import { FullMenuDetail, StoreValue } from '../types/store';
 import { getIsActiveTime } from '../helpers/store';
 import {
   fetchFullMenuDetail,
