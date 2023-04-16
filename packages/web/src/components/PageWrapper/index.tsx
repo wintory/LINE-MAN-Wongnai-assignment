@@ -7,6 +7,7 @@ const Wrapper = styled('div')(() => ({
   height: '100%',
   boxSizing: 'border-box',
   overflowX: 'hidden',
+  pb: '2.4rem',
 }));
 
 const PageWrapper: FC = ({ children }) => {

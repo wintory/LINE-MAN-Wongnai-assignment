@@ -13,6 +13,7 @@ const CardWrapper = styled(Box)(({ theme }) => ({
   width: '100%',
   padding: '1.6rem',
   cursor: 'pointer',
+  boxSizing: 'border-box',
 
   '&.disabled': {
     opacity: 0.5,
@@ -43,7 +44,9 @@ const Card: FC<CardProps> = ({
             borderRadius: '1.6rem',
           }}
         />
-        <CardContent>{children}</CardContent>
+        <CardContent sx={{ padding: '1.6rem', boxSizing: 'border-box' }}>
+          {children}
+        </CardContent>
       </Stack>
     </CardWrapper>
   );

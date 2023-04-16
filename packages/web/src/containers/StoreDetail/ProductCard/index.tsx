@@ -15,11 +15,12 @@ interface CardProps {
 const ContentWrapper = styled(Box)(({ theme }) => ({
   bgcolor: theme.palette.common.white,
   width: '100%',
+  boxSizing: 'border-box',
   padding: '1.6rem',
   cursor: 'pointer',
 
   [theme.breakpoints.up('lg')]: {
-    padding: '1.6rem 3.2rem',
+    padding: '0 1.6rem',
   },
 }));
 

@@ -43,33 +43,36 @@ const Home: FC = () => {
             false;
 
           return (
-            <Card
-              key={id}
-              image={coverImage}
-              disabled={!isActiveStore}
-              onClick={() => handleSelectStore(id)}
-            >
-              {name && <Typography variant="subtitle1">{name}</Typography>}
-              <StatusChip
-                size="medium"
-                isActive={isActiveStore}
-                color={isActiveStore ? 'success' : 'default'}
-                label={isActiveStore ? 'Open' : 'Open Soon'}
-                sx={{ maxWidth: 'fit-content' }}
-              />
-              <Box>
-                <Typography variant="body1" pt={2}>
-                  {`Open time: ${activeTimePeriod?.open || '-'}`}
-                </Typography>
-                <Typography variant="body1">
-                  {`Close time: ${activeTimePeriod?.close || '-'}`}
-                </Typography>
-              </Box>
-            </Card>
+            <>
+              <Card
+                key={id}
+                image={coverImage}
+                disabled={!isActiveStore}
+                onClick={() => handleSelectStore(id)}
+              >
+                {name && <Typography variant="subtitle1">{name}</Typography>}
+                <StatusChip
+                  size="medium"
+                  isActive={isActiveStore}
+                  color={isActiveStore ? 'success' : 'default'}
+                  label={isActiveStore ? 'Open' : 'Open Soon'}
+                  sx={{ maxWidth: 'fit-content' }}
+                />
+                <Box>
+                  <Typography variant="body1" pt={2}>
+                    {`Open time: ${activeTimePeriod?.open || '-'}`}
+                  </Typography>
+                  <Typography variant="body1">
+                    {`Close time: ${activeTimePeriod?.close || '-'}`}
+                  </Typography>
+                </Box>
+              </Card>
+              <Divider />
+            </>
           );
         })
       ) : (
-        <Box display="flex" justifyContent="center" width="100%" pt={6}>
+        <Box display="flex" justifyContent="center" width="100%" py={6}>
           <CircularProgress color="success" />
         </Box>
       )}
