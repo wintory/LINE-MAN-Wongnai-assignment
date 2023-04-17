@@ -7,6 +7,7 @@ const useStore = () => {
   const [stores, setStores] = useState<StoreValue[]>();
 
   const getAllStore = useCallback(async () => {
+    // Todo: improve with react-query
     const data: StoreValue[] | undefined = await fetchAllStore();
 
     if (data) {

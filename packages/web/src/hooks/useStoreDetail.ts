@@ -28,6 +28,7 @@ const useStoreDetail = (storeId?: number | string) => {
   const getStoreDetail = useCallback(
     async (id: number | string) => {
       setIsFetching(true);
+      // Todo: improve with react-query
       const data: StoreValue | undefined = await fetchStoreDetail(id);
 
       if (data) {
@@ -43,6 +44,7 @@ const useStoreDetail = (storeId?: number | string) => {
       if (!id || !page) return;
 
       setIsFetching(true);
+      // Todo: improve with react-query
       const data: StoreValue | undefined = await fetchMoreStoreDetail(id, page);
 
       if (data && data?.menus.length > 0) {
@@ -63,6 +65,7 @@ const useStoreDetail = (storeId?: number | string) => {
     async (storeId: number, menuName: string) => {
       setIsFetching(true);
       const shortData = storeDetail?.menus.find(({ id }) => id === menuName);
+      // Todo: improve with react-query
       const data: FullMenuDetail | undefined = await fetchFullMenuDetail(
         storeId,
         menuName
