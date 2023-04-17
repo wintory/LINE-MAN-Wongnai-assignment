@@ -95,6 +95,7 @@ const StoreController = {
     try {
       const userId = req.params.storeId || '';
       const menuName = req.params.menuNames || '';
+      console.log({ menuName });
 
       if (userId && menuName) {
         const menuUri = `${AppConfig.apiBaseUrl}/api/restaurants/${userId}/menus/${menuName}/full.json`;

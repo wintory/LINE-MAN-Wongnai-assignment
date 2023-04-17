@@ -3,7 +3,7 @@ import AppConfig from './config/app';
 import Routes from './routes';
 import cors from 'cors';
 
-const app: Application = express();
+export const app: Application = express();
 const port = AppConfig.port;
 
 app.use(Routes);

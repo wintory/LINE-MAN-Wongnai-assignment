@@ -6,7 +6,7 @@
 		"dev": "PORT=8081 ts-node-dev --respawn --transpile-only index.ts",
 		"lint": ". eslint",
 		"build": "tsc",
-		"test": "jest"
+		"test": "PORT=8083 jest"
 	},
 	"devDependencies": {
 		"@types/express": "^4.17.11",
