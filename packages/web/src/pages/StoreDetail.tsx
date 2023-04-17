@@ -5,9 +5,10 @@ import {
   Typography,
   Divider,
   CircularProgress,
+  useTheme,
 } from '@mui/material';
 import { FC, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import FullScreenLoading from '../components/FullScreenLoading';
 import PageWrapper from '../components/PageWrapper';
 import useStoreDetail from '../hooks/useStoreDetail';
@@ -15,6 +16,7 @@ import ProductCard from '../containers/StoreDetail/ProductCard';
 import { MenuDetail } from '../types/store';
 import useInfiniteScroll from 'react-infinite-scroll-hook';
 import MenuDetailPopup from '../containers/StoreDetail/MenuDetailPopup';
+import HomeIcon from '@mui/icons-material/Home';
 
 const Image = styled('img')(({ theme }) => ({
   width: '100%',
@@ -48,6 +50,8 @@ export const StatusChip = styled(Chip)<{ isActive: boolean }>(
 
 const StoreDetail: FC = () => {
   const params = useParams();
+  const theme = useTheme();
+  const navigate = useNavigate();
   const { storeId } = params;
   const {
     storeDetail,
@@ -72,6 +76,10 @@ const StoreDetail: FC = () => {
     return storeDetail?.menus || [];
   }, [storeDetail?.menus]);
 
+  const handleBackToHome = () => {
+    navigate('/');
+  };
+
   if (!storeDetail) return <FullScreenLoading />;
 
   return (
@@ -81,6 +89,26 @@ const StoreDetail: FC = () => {
         onClose={handleClosePopup}
         data={selectedMenu}
       />
+      <Box
+        sx={{
+          borderRadius: '50%',
+          bgcolor: theme.palette.success.dark,
+          position: 'fixed',
+          right: '2rem',
+          bottom: '2rem',
+          cursor: 'pointer',
+          padding: '0.8rem',
+        }}
+        onClick={handleBackToHome}
+      >
+        <HomeIcon
+          sx={{
+            fill: theme.palette.common.white,
+            width: { xs: '3.6rem', md: '5.6rem' },
+            height: { xs: '3.6rem', md: '5.6rem' },
+          }}
+        />
+      </Box>
       <Box display="block">
         <Image alt="store-cover-image" src={storeDetail?.coverImage} />
         <ContentWrapper>

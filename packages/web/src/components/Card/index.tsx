@@ -36,7 +36,7 @@ const Card: FC<CardProps> = ({
         <CardMedia
           component="img"
           image={image || NoImage}
-          alt="media-image"
+          alt={image ? 'media-image' : 'no-media-image'}
           sx={{
             width: { xs: '8rem', md: '20rem' },
             height: { xs: '8rem', md: '20rem' },
