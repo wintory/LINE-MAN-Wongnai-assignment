@@ -5,7 +5,7 @@ import {
   styled,
   Typography,
 } from '@mui/material';
-import { FC } from 'react';
+import { FC, Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Card from '../components/Card';
 import PageWrapper from '../components/PageWrapper';
@@ -43,9 +43,8 @@ const Home: FC = () => {
             false;
 
           return (
-            <>
+            <Fragment key={id}>
               <Card
-                key={id}
                 image={coverImage}
                 disabled={!isActiveStore}
                 onClick={() => handleSelectStore(id)}
@@ -68,7 +67,7 @@ const Home: FC = () => {
                 </Box>
               </Card>
               <Divider />
-            </>
+            </Fragment>
           );
         })
       ) : (

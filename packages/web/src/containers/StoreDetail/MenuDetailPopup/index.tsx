@@ -10,7 +10,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
-import { FC, forwardRef, ReactElement, Ref, useMemo } from 'react';
+import { FC, forwardRef, Fragment, ReactElement, Ref, useMemo } from 'react';
 import { FullMenuDetail } from '../../../types/store';
 import NoImage from '@assets/images/no_image_available.svg';
 import CloseIcon from '@mui/icons-material/Close';
@@ -132,7 +132,7 @@ const MenuDetailPopup: FC<MenuDetailPopupProps> = ({
                 pt={4}
               >
                 {data?.options.map(({ label, choices }) => (
-                  <>
+                  <Fragment key={label}>
                     {data?.name && (
                       <Typography variant="subtitle1">{label}</Typography>
                     )}
@@ -146,7 +146,7 @@ const MenuDetailPopup: FC<MenuDetailPopupProps> = ({
                         </li>
                       ))}
                     </ul>
-                  </>
+                  </Fragment>
                 ))}
               </Box>
             )}
