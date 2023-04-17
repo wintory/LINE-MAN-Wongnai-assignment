@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DiscountText should match snapshot 1`] = `
+<p
+  class="MuiTypography-root MuiTypography-body1 css-mjamk0-MuiTypography-root"
+>
+  price: 
+  <span
+    class="css-2660ae"
+  >
+    100
+  </span>
+   
+  <span
+    class="discount css-2660ae"
+  >
+    60 Baht
+  </span>
+</p>
+`;
